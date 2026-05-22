@@ -36,7 +36,29 @@ void loop() {
       delay(100);
       bleKeyboard.release(KEY_MEDIA_NEXT_TRACK);
     }
+    if (c == 'l') {
+      // iOS lock screen shortcut: Ctrl+Cmd+Q
+      bleKeyboard.press(KEY_LEFT_CTRL);
+      bleKeyboard.press(KEY_LEFT_GUI);
+      bleKeyboard.press('q');
+      delay(100);
+      bleKeyboard.releaseAll();
+    }
+    if (c == 'u') {
+      // Unlock: send "u<passcode>\n" over serial, e.g. "u123456"
+      String pin = Serial.readStringUntil('\n');
+      pin.trim();
+      bleKeyboard.write(' ');       // wake the screen
+      delay(400);                   // wait for the lock screen
+      bleKeyboard.write(' ');       // dummy key: open the passcode entry page
+      delay(400);                   // wait for the passcode field
+      for (size_t i = 0; i < pin.length(); i++) {
+        bleKeyboard.write(pin[i]);
+        delay(50);                  // small gap between digits
+      }
+    }
   }
 
+  
   delay(10);
 }
