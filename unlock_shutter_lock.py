@@ -3,7 +3,7 @@ import serial
 import sys
 import time
 
-PASSCODE = "12345" # Change this to your phone's passcode
+PASSCODE = "123456" # Change this to your phone's passcode
 
 port = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 
@@ -13,7 +13,7 @@ time.sleep(5.0)
 
 # Shutter
 port.write(b'w')
-time.sleep(2.0)
+time.sleep(3.0)
 
 # Lock the phone
 port.write(b'l')
